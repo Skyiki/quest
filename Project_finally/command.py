@@ -107,8 +107,35 @@ def callback_Inlines(call):
                                            ' Вы проиграли!'
                                            '\nНажмите /start, чтобы начать игру заново.')
 
+@bot.callback_query_handler(func=lambda call: call.data == "butt3")
+def callback_Inlines(call):
+    keyboard = types.InlineKeyboardMarkup()
+    but1 = types.InlineKeyboardButton('Побежать в случайную сторону', callback_data='buuut1')
+    but2 = types.InlineKeyboardButton('Остаться на месте', callback_data='buuut2')
+    keyboard.row(but1)
+    keyboard.add(but2)
 
+    bot.send_message(call.message.chat.id, 'Вы решаете не приближаться к коту и отходите от него.'
+                                           ' Вдруг, местность вокруг вас меняется, '
+                                           'все вокруг переливается разными цветами. '
+                                           'Местность сначала становится похожа на вулкан, '
+                                           'после сменяется на океан, лес. '
+                                           '\nВы решаете:',
+                     reply_markup=keyboard)
 
+@bot.callback_query_handler(func=lambda call: call.data == "buuut1")
+def callback_Inlines(call):
+    bot.send_message(call.message.chat.id, 'Вы побежали налево, пытаясь избегать препятствия, '
+                                           'но всё равно упали в вулкан. \nВы проиграли!')
+
+@bot.callback_query_handler(func=lambda call: call.data == "buuut2")
+def callback_Inlines(call):
+    bot.send_message(call.message.chat.id, 'Вы остаётесь на месте и вас накрывает волной цунами,'
+                                           ' когда вы выплываете, то попадаете на гору. '
+                                           'Местность перестаёт меняться, но на горе становится очень холодно,'
+                                           ' так как ваша одежда всё ещё мокрая.'
+                                           'Вы медленно умираете от обморожения. '
+                                           '\nВы проиграли!')
 
 @bot.callback_query_handler(func=lambda call: call.data == 'but2')
 def handle_next_level_buttons(call):
@@ -129,6 +156,48 @@ def handle_next_level_buttons(call):
                              ' Вам нужно что-то делать, чтобы разобраться в данной ситуации.',
                              reply_markup=keyboard)
 
+@bot.callback_query_handler(func=lambda call: call.data == 'buttt2')
+def handle_next_level_buttons(call):
+        keyboard = types.InlineKeyboardMarkup()
+        but1 = types.InlineKeyboardButton('*сказать правду*', callback_data='butont1')
+        but2 = types.InlineKeyboardButton('*сказать, что вы потеряли память*', callback_data='buton2')
+        but3 = types.InlineKeyboardButton('*подкатить к мужчине*', callback_data='buton3')
+        keyboard.row(but1)
+        keyboard.add(but2)
+        keyboard.add(but3)
+
+        bot.send_message(call.message.chat.id,
+                             'Вы окликаете мужчину, одетого в костюм. Он поворачивается.'
+                             ' Его лицо кажется вам смутно знакомыми. Он недоумённо смотрят на вас.'
+                             '\n- Мисс, вы что-то хотели? - мужчина подходит к вам, ожидая ответа.'
+                             ' Он кажется недовольным'
+                             ' тем, что кто-то тратит его время. Вам лучше поторопиться с ответом',
+                             reply_markup=keyboard)
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buton1')
+def handle_next_level_buttons(call):
+        bot.send_message(call.message.chat.id,'Мужчина кажется заинтересован вашим рассказом.'
+                                              ' Он поправляет свои очки.'
+                                              'Он задаёт вам много уточняющих вопросов, понимая,'
+                                              ' что ты говоришь ему правду'
+                                              '\n- Я помогу тебе. - мужчина исполняет своё обещание. '
+                                              '\nВы выиграли!')
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buton2')
+def handle_next_level_buttons(call):
+        bot.send_message(call.message.chat.id,'Мужчина кажется заинтересован вашим рассказом.'
+                                              ' Он поправляет свои очки.'
+                                              'Он задаёт вам много уточняющих вопросов, понимая,'
+                                              ' что ты говоришь ему неправду. '
+                                              'Ему не понравилось, что ты зря потратил_а его время. Он убивает тебя'
+                                              '\nВы проиграли!')
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buton2')
+def handle_next_level_buttons(call):
+        bot.send_message(call.message.chat.id,'Мужчина нахмурился,'
+                                              ' ему не понравилось, что ты зря потратил_а его время. Он убивает тебя'
+                                              '\nВы проиграли!')
+
 @bot.callback_query_handler(func=lambda call: call.data == 'but3')
 def handle_next_level_buttons(call):# локация 3 богатыря lvl 2
         keyboard = types.InlineKeyboardMarkup()
@@ -139,7 +208,7 @@ def handle_next_level_buttons(call):# локация 3 богатыря lvl 2
 
         bot.send_message(call.message.chat.id,
                              'Вы пытаетесь двигаться, как вдруг, у вас перед глазами замелькало множество красок.'
-                             ' Когда вы приходите в себя, то обнаруживаете густой лес. Ветви деервьев закрывают проход '
+                             ' Когда вы приходите в себя, то обнаруживаете густой лес. Ветви деревьев закрывают проход '
                              'к солнцу, из-за этого вы не можете далеко видеть.'
                              ' Из-за него вам становится страшно.'
                              ' Вы решаете:',
