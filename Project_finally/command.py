@@ -246,7 +246,7 @@ def handle_next_level_buttons(call):
 def handle_next_level_buttons(call):# локация 3 богатыря lvl 2
         keyboard = types.InlineKeyboardMarkup()
         but1 = types.InlineKeyboardButton('Пойти вперёд', callback_data='butttt1')
-        but2 = types.InlineKeyboardButton('Поискать что-нибудь', callback_data='butttt2')
+        but2 = types.InlineKeyboardButton('Остаться на месте', callback_data='butttt2')
         keyboard.row(but1)
         keyboard.add(but2)
 
@@ -254,9 +254,50 @@ def handle_next_level_buttons(call):# локация 3 богатыря lvl 2
                              'Вы пытаетесь двигаться, как вдруг, у вас перед глазами замелькало множество красок.'
                              ' Когда вы приходите в себя, то обнаруживаете густой лес. Ветви деревьев закрывают проход '
                              'к солнцу, из-за этого вы не можете далеко видеть.'
-                             ' Из-за него вам становится страшно.'
+                             ' Из-за странной атмосферы вам становится страшно.'
                              ' Вы решаете:',
                              reply_markup=keyboard)
 
+@bot.callback_query_handler(func=lambda call: call.data == 'butttt1')
+def handle_next_level_butttt1(call):# локация 1 lvl 3
+    keyboard = types.InlineKeyboardMarkup()
+    but1 = types.InlineKeyboardButton("Пройти в крепость", callback_data='buttons1')
+    but2 = types.InlineKeyboardButton('Остаться на опушке леса', callback_data='buttons2')
+    but3 = types.InlineKeyboardButton('Пойти дальше исследовать мир', callback_data='')
+    keyboard.add(but1)
+    keyboard.add(but2)
+    keyboard.add(but3)
+
+    bot.send_message(call.message.chat.id, 'Вы решаете идти вперёд. Проходя сквозь густую чащу, вы видете'
+                                           ' смутно знакомый замок, больше похожий на город или крепость. '
+                                           'Вас влечёт к этому величественному строению. Вы решаете: ',
+                     reply_markup=keyboard)
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buttons1')
+def buttons1(call):# локация 1 lvl 4
+    bot.send_message(call.message.chat.id, 'Вы проходите к крепость. Осматриваясь, вы замечаете как все тут красиво, '
+                                           'но старомодно. Спустя долгое время скитаний вас жалеет один добрый человек.'
+                                           ' Он приютил вас. Вы остались жить в этой крепости. '
+                                           '\nВы остались жить в крепости! \nВы выиграли! ')
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buttons2')
+def buttons2(call):# локация 2 lvl 4
+    bot.send_message(call.message.chat.id, 'Вы остаётесь на опушке леса. Разглядывая местность, вы обнаруживаете '
+                                           'стаю диких волков. Они нападают на вас.'
+                                           '\nВы проиграли! \nНажмите /start, чтобы начать игру заново.')
+
+@bot.callback_query_handler(func=lambda call: call.data == 'buttons3')
+def buttons3(call):# локация 3 lvl 4
+    bot.send_message(call.message.chat.id, 'Вы решаете исследовать этот мир, да вот только вы ничего о нём не знаете'
+                                           '. Поэтому умираете в первый день вашего путешествия. '
+                                           'На вас напали разбойники. \nВы проиграли! '
+                                           '\nНажмите /start, чтобы начать игру заново.')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'butttt2')
+def handle_next_level_butttt2(call):  # локация 2 lvl 3
+    bot.send_message(call.message.chat.id, 'Вы решаете остаться на месте, но быстро жалеете о своём решении.'
+                                           'На вас нападают охотники, убивая. \nВы проиграли'
+                                           '\nНажмите /start, чтобы начать игру заново.',)
 
 bot.polling()
