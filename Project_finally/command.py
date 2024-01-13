@@ -11,6 +11,12 @@ try:
 except:
     players = {}
 
+Osnova.video_func()
+Osnova.animation_func()
+Osnova.audio_func()
+Osnova.photo_func()
+Osnova.sticker_func()
+Osnova.text_func()
 
 @bot.message_handler(commands=['start'])
 def start_func(message):
@@ -31,50 +37,14 @@ def callback_Inline(call):
     user_id = call.message.chat.id
 
     if user_id in players:
-        if players[user_id]['location'] == 'start' and players[user_id]['lvl'] == "1":
-            players[user_id] = {}
-            players[user_id]['location'] = 'start'
-            players[user_id]['lvl'] = "1"
-
-            with open('player.json', 'w+') as file:
-                json.dump(players, file)
-
-            keyboard = types.InlineKeyboardMarkup()
-            but1 = types.InlineKeyboardButton(text='Закричать', callback_data='but1')
-            but2 = types.InlineKeyboardButton(text='Смириться', callback_data='but2')
-            but3 = types.InlineKeyboardButton(text='Попытаться двигаться', callback_data='but3')
-            keyboard.add(but1)
-            keyboard.add(but2)
-            keyboard.add(but3)
-
-            bot.send_message(call.message.chat.id, "Вы чувствуете, что под вами нет твердой поверхности."
-                                                   ' Вы открываете глаза, пытаясь понять, что происходит.'
-                                                   ' Как только вы открываете глаза, то вас охватывает страх.'
-                                                   'Вы падаете. Вы пытаетесь успокоиться и к счастью вам это удается.'
-                                                   ' \nВы решаете', reply_markup=keyboard)
-        elif players[user_id]['location'] == 'cat' and players[user_id]['lvl'] == "2":
-            bot.register_next_step_handler_by_chat_id(user_id, butonss1)
-
-        elif players[user_id]['location'] == 'cat1' and players[user_id]['lvl'] == "3":
-            bot.register_next_step_handler_by_chat_id(user_id, butt1)
-
-        elif players[user_id]['location'] == 'cat3' and players[user_id]['lvl'] == "3":
-            bot.register_next_step_handler_by_chat_id(user_id, butt3)
-
-        elif players[user_id]['location'] == 'tokyo' and players[user_id]['lvl'] == "2":
-            bot.register_next_step_handler_by_chat_id(user_id, butonss2)
-
-        elif players[user_id]['location'] == 'tokyo1' and players[user_id]['lvl'] == "3":
-            bot.register_next_step_handler_by_chat_id(user_id, buttt1)
-
-        elif players[user_id]['location'] == 'tokyo3' and players[user_id]['lvl'] == "3":
-            bot.register_next_step_handler_by_chat_id(user_id, buttt3)
-
-        elif players[user_id]['location'] == '3 hero' and players[user_id]['lvl'] == "2":
-            bot.register_next_step_handler_by_chat_id(user_id, butonss3)
-
-        elif players[user_id]['location'] == '3 hero1' and players[user_id]['lvl'] == "3":
-            bot.register_next_step_handler_by_chat_id(user_id, butttt1)
+        keyboard = types.InlineKeyboardMarkup()
+        # создание и добавление кнопок на созданную клавиатуру
+        button1 = types.InlineKeyboardButton(text='Да!', callback_data='yes')
+        button2 = types.InlineKeyboardButton(text='Нет', callback_data='no')
+        keyboard.add(button1)
+        keyboard.add(button2)
+        bot.send_message(call.message.chat.id, "Внимание! Найдена незаконченная игра. Хотите продолжить?",
+                         reply_markup=keyboard)
 
     elif user_id not in players:
         players[user_id] = {}
@@ -97,6 +67,78 @@ def callback_Inline(call):
                                                    ' Как только вы открываете глаза, то вас охватывает страх.'
                                                    'Вы падаете. Вы пытаетесь успокоиться и к счастью вам это удается.'
                                                    ' \nВы решаете', reply_markup=keyboard)
+@bot.callback_query_handler(func=lambda call: call.data == 'yes')
+def yes_func(call):
+    user_id = call.message.chat.id
+    if players[user_id]['location'] == 'start' and players[user_id]['lvl'] == "1":
+        players[user_id] = {}
+        players[user_id]['location'] = 'start'
+        players[user_id]['lvl'] = "1"
+
+        with open('player.json', 'w+') as file:
+            json.dump(players, file)
+
+        keyboard = types.InlineKeyboardMarkup()
+        but1 = types.InlineKeyboardButton(text='Закричать', callback_data='but1')
+        but2 = types.InlineKeyboardButton(text='Смириться', callback_data='but2')
+        but3 = types.InlineKeyboardButton(text='Попытаться двигаться', callback_data='but3')
+        keyboard.add(but1)
+        keyboard.add(but2)
+        keyboard.add(but3)
+
+        bot.send_message(call.message.chat.id, "Вы чувствуете, что под вами нет твердой поверхности."
+                                               ' Вы открываете глаза, пытаясь понять, что происходит.'
+                                               ' Как только вы открываете глаза, то вас охватывает страх.'
+                                               'Вы падаете. Вы пытаетесь успокоиться и к счастью вам это удается.'
+                                               ' \nВы решаете', reply_markup=keyboard)
+    elif players[user_id]['location'] == 'cat' and players[user_id]['lvl'] == "2":
+        bot.register_next_step_handler_by_chat_id(user_id, butonss1)
+
+    elif players[user_id]['location'] == 'cat1' and players[user_id]['lvl'] == "3":
+        bot.register_next_step_handler_by_chat_id(user_id, butt1)
+
+    elif players[user_id]['location'] == 'cat3' and players[user_id]['lvl'] == "3":
+        bot.register_next_step_handler_by_chat_id(user_id, butt3)
+
+    elif players[user_id]['location'] == 'tokyo' and players[user_id]['lvl'] == "2":
+        bot.register_next_step_handler_by_chat_id(user_id, butonss2)
+
+    elif players[user_id]['location'] == 'tokyo1' and players[user_id]['lvl'] == "3":
+        bot.register_next_step_handler_by_chat_id(user_id, buttt1)
+
+    elif players[user_id]['location'] == 'tokyo3' and players[user_id]['lvl'] == "3":
+        bot.register_next_step_handler_by_chat_id(user_id, buttt3)
+
+    elif players[user_id]['location'] == '3 hero' and players[user_id]['lvl'] == "2":
+        bot.register_next_step_handler_by_chat_id(user_id, butonss3)
+
+    elif players[user_id]['location'] == '3 hero1' and players[user_id]['lvl'] == "3":
+        bot.register_next_step_handler_by_chat_id(user_id, butttt1)
+
+@bot.callback_query_handler(func=lambda call: call.data == "no")
+def no_func(call):
+    user_id = call.message.chat.id
+    players[user_id] = {}
+    players[user_id]['location'] = 'start'
+    players[user_id]['lvl'] = "1"
+
+    with open('player.json', 'w+') as file:
+        json.dump(players, file)
+
+    keyboard = types.InlineKeyboardMarkup()
+    but1 = types.InlineKeyboardButton(text='Закричать', callback_data='butonss1')
+    but2 = types.InlineKeyboardButton(text='Смириться', callback_data='butonss2')
+    but3 = types.InlineKeyboardButton(text='Попытаться двигаться', callback_data='butonss3')
+    keyboard.add(but1)
+    keyboard.add(but2)
+    keyboard.add(but3)
+
+    bot.send_message(call.message.chat.id, "Вы чувствуете, что под вами нет твердой поверхности."
+                                           ' Вы открываете глаза, пытаясь понять, что происходит.'
+                                           ' Как только вы открываете глаза, то вас охватывает страх.'
+                                           'Вы падаете. Вы пытаетесь успокоиться и к счастью вам это удается.'
+                                           ' \nВы решаете', reply_markup=keyboard)
+
 
 @bot.callback_query_handler(func=lambda call: call.data == "button2")
 def callback_Inlinee(call):
