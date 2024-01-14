@@ -459,8 +459,8 @@ def butot3(call):
     with open('osnova/player.json', 'w+') as file:
         json.dump(players, file)
 
-@bot.callback_query_handler(func=lambda call: call.data == 'butonss3')
-def butonss3(call):# локация 3 hero lvl 2
+@bot.callback_query_handler(func=lambda call: call.data == 'butonss3')# локация 3 hero lvl 2
+def butonss3(call):
     user_id = call.message.chat.id
 
     players[user_id] = {}
